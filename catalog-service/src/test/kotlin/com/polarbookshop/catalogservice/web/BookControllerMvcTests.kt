@@ -12,16 +12,15 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
 @WebMvcTest(BookController::class)
-internal class BookControllerMvcTests() {
+internal class BookControllerMvcTests {
     @Autowired
     private lateinit var mockMvc: MockMvc
     @MockBean
     private lateinit var bookService: BookService
     @Test
-    @Throws(Exception::class)
     fun whenGetBookNotExistingThenShouldReturn404() {
         val isbn = "73737313940"
-        BDDMockito.given(bookService!!.viewBookDetails(isbn))
+        BDDMockito.given(bookService.viewBookDetails(isbn))
             .willThrow(BookNotFoundException::class.java)
         mockMvc
             .perform(MockMvcRequestBuilders.get("/books/$isbn"))
